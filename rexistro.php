@@ -23,12 +23,24 @@ if (mysqli_connect_errno())
 }
 
 
-
 #Hacemos las inserciones en la tabla novo_rexitro.
 
 
+$insert= "INSERT INTO `novo_rexistro` VALUES ('$usuario','$contrasinal','$nome','$direccion','$telefono','$nifdni','$email')";
 
+$result = mysqli_query($mysqli_link, $insert);
 
+#Comprobamos mediante un if si se ha hecho o no el registro.
+
+if ($result){
+    echo "Se ha registrado correctamente! <br/>";
+    echo "Redirigiendo a la página de inicio";
+    header("refresh: 5; url = index.html");
+}
+else{
+    echo "Error al hacer el registro...Volviendo al login";
+    header("refresh: 5; url = index.html");
+}
 
 
 # pechamos a conexión co MySQL

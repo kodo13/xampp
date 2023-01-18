@@ -24,39 +24,69 @@ $select_query = "SELECT usuario from usuario where usuario='$usuario' and contra
 
 $result = mysqli_query($mysqli_link, $select_query);
 
-#Comprobamos el número de filas de la consulta, si no se devuelve nada, es que no existe el usuario con esa contraseña.
+#Si el resultado es true, entra al if, si no , saltamos al else.
+if ($result) {
+
+    #Comprobamos el número de filas de la consulta, si no se devuelve nada, es que no existe el usuario con esa contraseña.
+
+    $num_filas = $result->num_rows;
+
+    #Si es mayor que 0, es que la consulta ha devuelto algún valor.
+
+    if ($num_filas > 0) {
+
+        session_start();
+        $_SESSION['usuario'] = $usuario;
+
+        echo "Bienvenido <b>$usuario</b>, estás dentro. Redirigiendo al <i>menú de usuario</i> en 5 segundos...<br></br>";
+        echo "<img src='/cars/welcome.jpeg' border='0' width='500' height='500'>";
+        header("refresh: 5; url = menu_user.html");
+    }
+    #Si no devuelve nada, el usuario no existe el la tabla usuario. 
+    #Comprobamos si el usuario está en la tabla novo_rexistro.
+    elseif ($num_filas == 0) {
+
+        #Ejecutamos consulta para buscar usuario en novo_rexitro
+        $select_query2 = "SELECT usuario from novo_rexistro where usuario='$usuario' and contrasinal='$contrasinal'";
+        $result2 = mysqli_query($mysqli_link, $select_query2);
+    
+        $num_filas2 = $result2->num_rows;
+    
+    
+        #Si es mayor que 0, es que la consulta ha devuelto algún valor.
+    
+        if ($num_filas2> 0) {
+    
+            session_start();
+            $_SESSION['usuario'] = $usuario;
+    
+            echo "Bienvenido <b>$usuario</b>, estás dentro. Redirigiendo al <i>menú de usuario</i> en 5 segundos...<br></br>";
+            echo "<img src='/cars/welcome.jpeg' border='0' width='500' height='500'>";
+            header("refresh: 5; url = menu_user.html");
+        }
+        #Si no devuelve nada, el usuario no existe
+        else {
+    
+            echo "No existe ninguna cuenta creada con el usuario $usuario, serás redirigido en 5 segundos al registro. ";
+            header("refresh: 5; url = rexistro.html");
+        }
 
 
-$num_filas = $result->num_rows;
+    } else {
 
-
-#Si es mayor que 0, es que la consulta ha devuelto algún valor.
-
-if ($num_filas > 0){
-
-    session_start();
-    $_SESSION['usuario'] = $usuario;
-
-    echo "Bienvenido <b>$usuario</b>, estás dentro. Redirigiendo al <i>menú de usuario</i> en 5 segundos...<br></br>";
-    echo "<img src='/cars/welcome.jpeg' border='0' width='500' height='500'>";
-    header("refresh: 5; url = menu_user.html");
+        #Revisar esto!!!!!!!!!!!!!!!!!!
+        echo "<img src='/cars/panda.jpeg' border='0' width='300' height='100'>";
+        echo "La contraseña introducida no es correcta, inténtalo de nuevo en 5 segundos. ";
+        header("refresh: 5; url = index.html");
+    }
 }
-#Si no devuelve nada, el usuario no existe
-elseif ($num_filas == 0){
-
+else{
     echo "No existe ninguna cuenta creada con el usuario $usuario, serás redirigido en 5 segundos al registro. ";
     header("refresh: 5; url = rexistro.html");
-
-
-} else {
-
-#Revisar esto!!!!!!!!!!!!!!!!!!
-    echo "<img src='/cars/panda.jpeg' border='0' width='300' height='100'>";
-    echo "La contraseña introducida no es correcta, inténtalo de nuevo en 5 segundos. ";
-    header("refresh: 5; url = index.html");
 }
 
 # pechamos a conexión co MySQL
+
 mysqli_close($mysqli_link);
 
 
