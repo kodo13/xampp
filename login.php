@@ -12,7 +12,7 @@ $mysqli_link = mysqli_connect("localhost","root","","frota");
 
 if (mysqli_connect_errno())
 {
-    printf("La conexión con MySQL ha fallado con error: %s",
+    printf("La conexión con MySQL ha fallado con error: %",
         mysqli_connect_error());
     exit;
 }
@@ -33,9 +33,13 @@ $num_filas = $result->num_rows;
 #Si es mayor que 0, es que la consulta ha devuelto algún valor.
 
 if ($num_filas > 0){
-    echo "Bienvenido <b>$usuario</b>, estás dentro. Redirigiendo al <i>menú de vehículos</i> en 5 segundos...<br></br>";
+
+    session_start();
+    $_SESSION['usuario'] = $usuario;
+
+    echo "Bienvenido <b>$usuario</b>, estás dentro. Redirigiendo al <i>menú de usuario</i> en 5 segundos...<br></br>";
     echo "<img src='/cars/welcome.jpeg' border='0' width='500' height='500'>";
-    header("refresh: 5; url = xestion_vehiculos.html");
+    header("refresh: 5; url = menu_user.html");
 }
 #Si no devuelve nada, el usuario no existe
 elseif ($num_filas == 0){
