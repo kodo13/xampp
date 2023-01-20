@@ -1,3 +1,14 @@
+<?php
+
+#iniciamos la sesión para mostrar la sesión del usuario.
+session_start();
+
+#Mostramos sesión del usuario.
+echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div><br>";
+
+?>
+
+
 <html>
     <head>
         <title>Menú user</title>
@@ -18,7 +29,7 @@
         </form>
         <br></br>
         
-        <form name="formulario2" method="post" action="mod_datos.html">
+        <form name="formulario2" method="post" action="mod_datos_form.php">
             <button type="submit" name="modificar" >Modificar os meus datos</button>
             <br/>
 

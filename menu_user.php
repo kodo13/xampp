@@ -1,5 +1,6 @@
 <?php  
 
+#Menú donde se listan los coches los coches de aluguer o venta.
 
 # Iniciamos la sesión
 session_start();

@@ -1,5 +1,7 @@
 <?php
 
+#Recogida de datos
+
 $contrasinal = $_REQUEST['contrasinal_novo'];
 $nome = $_REQUEST['nome_novo'];
 $direccion = $_REQUEST['direccion_novo'];
@@ -12,11 +14,12 @@ $email = $_REQUEST['email_novo'];
 session_start();
 
 # Iniciamos conexión con el servicio MySQL
-$mysqli_link = mysqli_connect("localhost", "root","", "frota");
 
+#Comprobación de la conexión con MySQL
+$mysqli_link = mysqli_connect("localhost", "root","", "frota");
 if (mysqli_connect_errno())
 {
-    printf("La conexión con MySQL ha fallado con error: %",
+    printf("La conexión con MySQL ha fallado con error: %s",
         mysqli_connect_error());
     exit;
 }
@@ -39,22 +42,28 @@ if(!isset($_SESSION["usuario"])){
     if (isset($_REQUEST['modificar'])){
         
         #Generamos variable user para usarla en la consulta mysql.
-        $user=$_SESSION["usuario"];
-        #echo "user  ".$user;
+        $usuario=$_SESSION["usuario"];
+        #echo "usuario  ".$usuario;
         
-        $update= "UPDATE usuario SET contrasinal='$contrasinal',nome='$nome',direccion='$direccion',telefono='$telefono',nifdni='$nifdni',email='$email' WHERE usuario= '$user'";
+        $update= "UPDATE usuario SET contrasinal='$contrasinal',nome='$nome',direccion='$direccion',telefono='$telefono',nifdni='$nifdni',email='$email' WHERE usuario= '$usuario'";
         $result = mysqli_query($mysqli_link, $update);
-        if( $result){
-            echo "Registro actualizado";
+        #Se devuelve TRUE si se ejecutó la consulta correctamente.
+        
+        if( $result){ #Si verdadero, entonce registro echo correctamente.
+            echo "Registro actualizado, volviendo al menú...";
+            
+            header("refresh: 5; url = menu_user_form.php");
         }
         else{
             echo "Error al modificar los datos!" . mysqli_error($mysqli_link);
+            echo "Volviendo al menú del usuario...";
+            header("refresh: 5; url = menu_user_form.php");
         }
         
         #Mostramos los datos modificados
 
 
-        $select_u = "SELECT * from usuario where usuario= '$user'";
+        $select_u = "SELECT * from usuario where usuario= '$usuario'";
         
         $result_u = mysqli_query($mysqli_link, $select_u);
         $num_filas_u = $result_u->num_rows;
@@ -80,6 +89,7 @@ if(!isset($_SESSION["usuario"])){
     }
 
 }
+
 
 # pechamos a conexión co MySQL
 mysqli_close($mysqli_link);
