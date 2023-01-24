@@ -1,4 +1,7 @@
 <?php
+#Header para la correcta visualización y tratamiento de las tildes y ñ.
+
+header("Content-Type: text/html;charset=utf-8");
 
 
 $usuario = $_REQUEST['usuario'];
@@ -7,6 +10,10 @@ $contrasinal = $_REQUEST['contrasinal'];
 #Creamos la conexión con la base de datos
 
 $mysqli_link = mysqli_connect("localhost","root","","frota");
+
+#Indicamos el modelo de caracteres a usar.
+
+mysqli_set_charset($mysqli_link, "utf8");
 
 #Si hay algún error, se sale del programa
 

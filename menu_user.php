@@ -7,6 +7,8 @@ session_start();
 
 # Iniciamos conexión con el servicio MySQL
 $mysqli_link = mysqli_connect("localhost", "root","", "frota");
+mysqli_set_charset($mysqli_link, "utf8");
+
 
 if (mysqli_connect_errno())
 {
@@ -41,6 +43,7 @@ if(!isset($_SESSION["usuario"])){
         echo "<br><b> Vehículos en venta</b><br>";
         
         #Mostramos los vehículos mediante un bucle while que va leyendo línea a línea y mostrando los resultados de cada vez.
+        echo "<form action='comprar_alugar.php' method='post'>";
 
         while ($fila = mysqli_fetch_array($result_venta, MYSQLI_ASSOC)) {
             echo "<br/>";
@@ -50,8 +53,11 @@ if(!isset($_SESSION["usuario"])){
             echo "Marca: " . $fila['marca'] . "<br/>";
             echo "Prezo: " . $fila['prezo'] . "<br/>";
             echo "Foto: <img src= ' ". $fila['foto'] . " '> <br/>";
+            echo "<p> <input type='radio' name='comprar' value='comprar'> </p>";
             echo "<br/>";
         }
+        echo "<p><input type='submit' name='comprar' value='Comprar'></p>
+                </form>";
 
     }
 
@@ -64,6 +70,7 @@ if(!isset($_SESSION["usuario"])){
         echo "<br><b> Vehículos en aluguer</b><br>";
         #Mostramos los vehículos mediante un bucle while que va leyendo línea a línea y mostrando los resultados de cada vez.
         
+        echo "<form action='comprar_alugar.php' method='post'>";
         while ($fila = mysqli_fetch_array($result_aluguer, MYSQLI_ASSOC)) {
             echo "<br/>";
             echo "Modelo: " . $fila['modelo'] . "<br/>";
@@ -72,8 +79,13 @@ if(!isset($_SESSION["usuario"])){
             echo "Marca: " . $fila['marca'] . "<br/>";
             echo "Prezo: " . $fila['prezo'] . "<br/>";
             echo "Foto: <img src= ' ". $fila['foto'] . " '> <br/>";
+            $modelo = $fila['modelo'];
+            echo "<p><input type='radio' name='alugar' value='$modelo'></p>";
             echo "<br/>";
         }
+
+        echo "<p><input type='submit' name='aluguer' value='Alugar'></p>
+                </form>";
     }
 
     mysqli_close($mysqli_link);

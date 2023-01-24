@@ -13,6 +13,7 @@ $email = $_REQUEST['email_novo'];
 #Creamos la conexión con la base de datos
 
 $mysqli_link = mysqli_connect("localhost","root","","frota");
+mysqli_set_charset($mysqli_link, "utf8");
 
 #Si hay algún error, se sale del programa
 

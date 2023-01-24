@@ -17,6 +17,9 @@ session_start();
 
 #Comprobación de la conexión con MySQL
 $mysqli_link = mysqli_connect("localhost", "root","", "frota");
+mysqli_set_charset($mysqli_link, "utf8");
+
+
 if (mysqli_connect_errno())
 {
     printf("La conexión con MySQL ha fallado con error: %s",

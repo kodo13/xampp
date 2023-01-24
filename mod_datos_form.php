@@ -17,6 +17,7 @@ echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div>";
 
 # Iniciamos conexión con el servicio MySQL
 $mysqli_link = mysqli_connect("localhost", "root","", "frota");
+mysqli_set_charset($mysqli_link, "utf8");
 
 if (mysqli_connect_errno())
 {
