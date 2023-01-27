@@ -63,11 +63,14 @@ if(!isset($_SESSION["usuario"])){
 
     if(isset($_REQUEST['aluguer'])){
         #Realizamos consulta para recoger los vehiculos en aluguer.
-        $select_aluguer = "SELECT * FROM vehiculo_aluguer";
+        $select_aluguer = "SELECT * FROM vehiculo_aluguer where cantidade > '0'"; #Si existen vehículos sin existencias para alugar, 
+        #entonces no se muestran en la lista. Solo mostramops los disponibles.
+
         $result_aluguer = mysqli_query($mysqli_link, $select_aluguer);
         $num_filas_aluguer=$result_aluguer->num_rows;
 
         echo "<br><b> Vehículos en aluguer</b><br>";
+
         #Mostramos los vehículos mediante un bucle while que va leyendo línea a línea y mostrando los resultados de cada vez.
         
         echo "<form action='comprar_alugar.php' method='post'>";
@@ -80,13 +83,15 @@ if(!isset($_SESSION["usuario"])){
             echo "Prezo: " . $fila['prezo'] . "<br/>";
             echo "Foto: <img src= ' ". $fila['foto'] . " '> <br/>";
             $modelo = $fila['modelo'];
-            echo "<p><input type='radio' name='alugar' value='$modelo'></p>";
+            echo "<p><input type='radio' name='alugar' value='$modelo'></p>"; #Con value=$modelo, mandamos los datos del modelo para poder diferenciar que vehículo escogió el user
+
             echo "<br/>";
         }
 
-        echo "<p><input type='submit' name='aluguer' value='Alugar'></p>
+        echo "<p><input type='submit' name='aluguer' value='Alugar'></p>  
                 </form>";
     }
+        #Con name="aluguer", hacemos distinción 
 
     mysqli_close($mysqli_link);
 
