@@ -24,6 +24,9 @@ echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div><br>"
             <br></br>
             <button type="submit" name="venta" >Lista coches e motos á <b>venda</b></button>
             <br/>
+            </br>
+            <button type="submit" name="devolucion" >Devolver vehículo <b>alugado</b></button>
+            <br/>
             
 
         </form>

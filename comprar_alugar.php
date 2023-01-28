@@ -31,9 +31,10 @@ if(!isset($_SESSION["usuario"])){
 }else{
 
     echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div><br>";
+    
+
     #Comprobamos si el usuario quiere comprar o alugar vehículo.
 
-    
     if (isset($_REQUEST['comprar'])){
         
         echo $user;
@@ -47,6 +48,8 @@ if(!isset($_SESSION["usuario"])){
     #Recollemos modelo escollido polo usuario
     $modelo= $_REQUEST['alugar'];
     #echo $modelo;
+
+
     #Si escolleu a opción de alugar vehículo...
     if(isset($_REQUEST['aluguer'])){
 
@@ -54,10 +57,16 @@ if(!isset($_SESSION["usuario"])){
         $result_aluguer = mysqli_query($mysqli_link, $select_aluguer);
 
         $fila = mysqli_fetch_array($result_aluguer, MYSQLI_ASSOC);
-        
-        $cantidade= $fila['cantidade'];
 
-        #echo $cantidade;
+        #Recollemos os datos do modelo escollido.
+        
+        $cantidade = $fila['cantidade'];
+        $descricion = $fila['descricion'];
+        $marca = $fila['marca'];
+        $foto = $fila['foto'];
+        #$prezo = $fila['prezo']; #Non fai falta saber o prezo cando esté alugado.
+        
+
 
         if ($cantidade > 0){
             $cantidade = ($cantidade - 1); 
@@ -87,26 +96,31 @@ if(!isset($_SESSION["usuario"])){
             $result_alugado = mysqli_query($mysqli_link, $select_alugado);
             $num_filas_alugado=$result_alugado->num_rows; #Comprobamos si la consulta devuelve algun resultado
 
+            $fila2 = mysqli_fetch_array($result_alugado, MYSQLI_ASSOC);
+            $cant = $fila2['cantidade'];
+            
+
         
             if ($num_filas_alugado > 0 ){
     
-                $update2 = "UPDATE vehiculo_alugado SET cantidade=cantidade + 1 WHERE modelo='$modelo' and usuario='$user'";
+                $update2 = "UPDATE vehiculo_alugado SET cantidade=cantidade +1 WHERE modelo='$modelo' and usuario='$user'";
                 $result_update2 = mysqli_query($mysqli_link, $update2);
 
-                echo "Aluguer actualizadoo";
+                echo "Vehículoo alugado! </br> Nova cantidade alugada do modelo "." $modelo";
                 
             }
-            /*
+            
             else{
-            #Hacemos insert del vehiculo a la tabla vehiculo_alugado.
+            #Si no existe ningún usuario que tenga ese vehículo alugado, entonces hacemos insert del vehiculo a la tabla vehiculo_alugado.
 
-                $insert = "INSERT INTO `vehiculo_alugado`(`modelo`, `cantidade`, `descricion`, `marca`, `foto`, `usuario`) VALUES ('$fila['modelo']','$fila['cantidade']','$fila['descricion']','$fila['marca']','$fila['foto']','$user')";
+                $insert = "INSERT INTO vehiculo_alugado(modelo, cantidade, descricion, marca, foto, usuario) 
+                VALUES ('$modelo','$cantidade','$descricion','$marca','$foto','$user')";
 
                 $result_insert = mysqli_query($mysqli_link, $insert);
 
-                echo "<br><b> Novo vehículo alugado!! </b><br>";
+                echo "<br><b> Enhoraboa $user!! Desfruta do teu novo vehículo alugado, modelo $modelo!! </b></br> ";
             }
-            */
+            
 
         
             

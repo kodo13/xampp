@@ -21,6 +21,7 @@ if (mysqli_connect_errno())
 
 #Si lo está, saltamos al menú de vehículos.
 
+$user=$_SESSION["usuario"];
 if(!isset($_SESSION["usuario"])){
     #Si entra aquí, no tiene sesión inciciada y mandamos a login.
     echo "No tienes la sesión iniciada, redireccionando al login... ";
@@ -92,6 +93,39 @@ if(!isset($_SESSION["usuario"])){
                 </form>";
     }
         #Con name="aluguer", hacemos distinción 
+
+    
+
+    #Si escolleu devolver un vehículo alugado...
+    if (isset($_REQUEST['devolucion'])){
+
+        #Facemos consulta para ver que vehículos ten alugado o usuario para mostralos
+        $select_devolucion = "SELECT * FROM vehiculo_alugado where usuario='$user'";
+        $result_devolucion = mysqli_query($mysqli_link, $select_devolucion);
+        $num_filas_devolucion = $result_devolucion->num_rows;
+
+        
+        
+        
+        #Mostramos os vehículos alugados do usuario nun desplegable
+        echo "<br><b> Vehículos alugados</b><br>";
+        echo "<form action='devolucion.php' method='post'>";
+        echo "<select name='modelo_devolver'>
+                <option value='0'> Elixe vehiculo a devolver </option>";
+
+                while ($fila3 = mysqli_fetch_array($result_devolucion, MYSQLI_ASSOC)) {
+                    $modelo = $fila3['modelo'];
+                    echo "<option value='$modelo'>$modelo</option>";
+                }
+        echo "</select>";
+        echo "<p><input type='submit' name='devolucion' value='Devolución'></p>  
+                </form>";
+        
+      
+
+        
+
+    }
 
     mysqli_close($mysqli_link);
 
