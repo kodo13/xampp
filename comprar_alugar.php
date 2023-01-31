@@ -106,7 +106,9 @@ if(!isset($_SESSION["usuario"])){
                 $update2 = "UPDATE vehiculo_alugado SET cantidade=cantidade +1 WHERE modelo='$modelo' and usuario='$user'";
                 $result_update2 = mysqli_query($mysqli_link, $update2);
 
-                echo "Vehículoo alugado! </br> Nova cantidade alugada do modelo "." $modelo";
+                echo "Vehículoo alugado! </br> Nova cantidade alugada do modelo "." $modelo </br>";
+                echo "Volvendo ao menú do usuario... </br>";
+                header("refresh: 5; url = menu_user_form.php");
                 
             }
             
@@ -118,7 +120,9 @@ if(!isset($_SESSION["usuario"])){
 
                 $result_insert = mysqli_query($mysqli_link, $insert);
 
-                echo "<br><b> Enhoraboa $user!! Desfruta do teu novo vehículo alugado, modelo $modelo!! </b></br> ";
+                echo "<br><b> Enhoraboa $user!! Desfruta do teu novo vehículo alugado, modelo $modelo!! </b>< ";
+                echo "Volvendo ao menú do usuario... </br>";
+                header("refresh: 5; url = menu_user_form.php");
             }
             
 
@@ -127,6 +131,8 @@ if(!isset($_SESSION["usuario"])){
         }
         else{
             echo "meeeh, error";
+            echo "Volvendo ao menú do usuario... </br>";
+            header("refresh: 5; url = menu_user_form.php");
         }
     
     }

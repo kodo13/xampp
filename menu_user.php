@@ -100,7 +100,7 @@ if(!isset($_SESSION["usuario"])){
     if (isset($_REQUEST['devolucion'])){
 
         #Facemos consulta para ver que vehículos ten alugado o usuario para mostralos
-        $select_devolucion = "SELECT * FROM vehiculo_alugado where usuario='$user'";
+        $select_devolucion = "SELECT * FROM vehiculo_alugado where usuario='$user' and cantidade > 0";
         $result_devolucion = mysqli_query($mysqli_link, $select_devolucion);
         $num_filas_devolucion = $result_devolucion->num_rows;
 

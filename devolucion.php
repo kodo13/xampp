@@ -42,7 +42,9 @@ if(!isset($_SESSION["usuario"])){
         $update2 = "UPDATE vehiculo_alugado SET cantidade=cantidade -1 WHERE modelo='$modelo' and usuario='$user'";
         $result_update2 = mysqli_query($mysqli_link, $update2);
 
-        echo "Vehículo devolto con éxito!!";
+        echo "Vehículo devolto con éxito!!</br>";
+        echo "Volvendo ao menú do usuario... ";
+        header("refresh: 5; url = menu_user_form.php");
 
     }
 }
