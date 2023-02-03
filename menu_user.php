@@ -49,12 +49,13 @@ if(!isset($_SESSION["usuario"])){
         while ($fila = mysqli_fetch_array($result_venta, MYSQLI_ASSOC)) {
             echo "<br/>";
             echo "Modelo: " . $fila['modelo'] . "<br/>";
+            $modelo_compra = $fila['modelo'];
             echo "Cantidade: " . $fila['cantidade'] . "<br/>";
             echo "Descrición: " . $fila['descricion'] . "<br/>";
             echo "Marca: " . $fila['marca'] . "<br/>";
             echo "Prezo: " . $fila['prezo'] . "<br/>";
             echo "Foto: <img src= ' ". $fila['foto'] . " '> <br/>";
-            echo "<p> <input type='radio' name='comprar' value='comprar'> </p>";
+            echo "<p> <input type='radio' name='compra' value='$modelo_compra'> </p>";
             echo "<br/>";
         }
         echo "<p><input type='submit' name='comprar' value='Comprar'></p>

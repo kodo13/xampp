@@ -35,23 +35,73 @@ if(!isset($_SESSION["usuario"])){
 
     #Comprobamos si el usuario quiere comprar o alugar vehículo.
 
+    #Se quere comprar...
     if (isset($_REQUEST['comprar'])){
+
+        #Gardamos o modelo escollido.
+        $modelo_compra= $_REQUEST['compra'];
         
-        echo $user;
-        echo "Compra";
+        #Consulta mysql
+        $select_compra = "SELECT * FROM vehiculo_venda WHERE modelo='$modelo_compra'";
+        $result_compra = mysqli_query($mysqli_link, $select_compra);
+        $num_filas_venta=$result_compra->num_rows;
+
+        if ($num_filas_venta > 0) {
+
+            $data = date('y-m-d'); #Recogemos la fecha actual de la compra
+            #Creamos archivo de texto
+
+            #Creamos variable co nome do ficheiro, onde gardamos nome do usuario que compra, modelo e data da compra.
+            $nome = "venta-$user" . "_$modelo_compra" . "_$data.pdf";
+
+            $ticket = fopen("$nome", "w") or die("No se puede abrir/crear ticket");
+            $salto = "\r\n";
+            $separator = "\n";
+            $registro = "'Usuario' . $separator . 'modelo' . $separator . 'descricion' . $separator . 'marca' . $separator . 'prezo' . $separator . $salto";
+            #Escribimos los resultados de la consulta del modelo elegido a comprar.
+            while ($fila_compra = mysqli_fetch_array($result_compra, MYSQLI_ASSOC)) {
+                $registro = "Usuario: " . $user . $separator . "Modelo: " . $fila_compra['modelo'] . $separator . "Descricion: " . $fila_compra['descricion'] . $separator . "Marca: " . $fila_compra['marca'] . $separator . "Prezo: ". $fila_compra['prezo'] . $separator . "Fecha: " .$data. $salto;
+                fwrite($ticket, $registro);
+
+            }
+
+            #Cerramos archivo
+            fclose($ticket);
+
+
+            echo "Compra feita con éxito! </br></br>";
+
+            #Mostramos ticket de la compra
+            $file0 = getcwd(); #Función que obtiene la ruta de acceso completa del directorio de trabajo actual, la almacenamos en variable.
+            $file= "$file0"."/"."$nome"; #Guardamos ruta completa del ticket en variable file.
+
+            $file = fopen("$file", "r"); #Abrimos fichero y leemos, mediante un bucle, línea por línea.
+
+            while(!feof($file)) {
+
+            echo fgets($file). "<br/>";
+
+            }
+
+            fclose($file);
+
+        }
+        
+        else{
+            echo "No se puede realizar la compra!";
+        }
 
     }
 
 
 
     
-    #Recollemos modelo escollido polo usuario
-    $modelo= $_REQUEST['alugar'];
-    #echo $modelo;
 
 
     #Si escolleu a opción de alugar vehículo...
     if(isset($_REQUEST['aluguer'])){
+        #Recollemos modelo escollido polo usuario
+    $modelo= $_REQUEST['alugar'];
 
         $select_aluguer = "SELECT * FROM vehiculo_aluguer WHERE modelo='$modelo'";
         $result_aluguer = mysqli_query($mysqli_link, $select_aluguer);
@@ -116,11 +166,11 @@ if(!isset($_SESSION["usuario"])){
             #Si no existe ningún usuario que tenga ese vehículo alugado, entonces hacemos insert del vehiculo a la tabla vehiculo_alugado.
 
                 $insert = "INSERT INTO vehiculo_alugado(modelo, cantidade, descricion, marca, foto, usuario) 
-                VALUES ('$modelo','$cantidade','$descricion','$marca','$foto','$user')";
+                VALUES ('$modelo','1','$descricion','$marca','$foto','$user')";
 
                 $result_insert = mysqli_query($mysqli_link, $insert);
 
-                echo "<br><b> Enhoraboa $user!! Desfruta do teu novo vehículo alugado, modelo $modelo!! </b>< ";
+                echo "<br><b> Enhoraboa $user!! Desfruta do teu novo vehículo alugado, modelo $modelo!! </b> ";
                 echo "Volvendo ao menú do usuario... </br>";
                 header("refresh: 5; url = menu_user_form.php");
             }
