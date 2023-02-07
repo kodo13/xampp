@@ -53,7 +53,7 @@ if(!isset($_SESSION["usuario"])){
             echo "Descrición: " . $fila['descricion'] . "<br/>";
             echo "Marca: " . $fila['marca'] . "<br/>";
             echo "Prezo: " . $fila['prezo'] . "<br/>";
-            echo "Foto: <img src= ' ". $fila['foto'] . " '> <br/>";
+            echo "Foto: <img src= ' ". $fila['foto'] ." ' width='350' height='250'> <br/>";
             echo "<br/>";
         }
         #Creamos botón para volver ao menú principal
@@ -88,8 +88,8 @@ if(!isset($_SESSION["usuario"])){
             echo "Descrición: " . $fila['descricion'] . "<br/>";
             echo "Marca: " . $fila['marca'] . "<br/>";
             echo "Prezo: " . $fila['prezo'] . "<br/>";
-            echo "Foto: <img src= ' ". $fila['foto'] . " '> <br/>";
-            echo "<br/>";
+            echo "Foto: <img src= ' ". $fila['foto'] . " ' width='350' height='250'> <br/>";
+            echo "<br/></br>";
         }
         
         #Creamos botón para volver ao menú principal

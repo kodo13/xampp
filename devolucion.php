@@ -40,7 +40,7 @@ if(!isset($_SESSION["usuario"])){
     if (isset($_REQUEST['devolucion'])) {
         
         #Restamos 1 á cantidade do vehiculo que ten ese usuario e ese modelo.
-
+ 
         $update2 = "UPDATE vehiculo_alugado SET cantidade=cantidade -1 WHERE modelo='$modelo' and usuario='$user'";
         $result_update2 = mysqli_query($mysqli_link, $update2);
 

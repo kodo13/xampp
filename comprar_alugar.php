@@ -68,8 +68,19 @@ if(!isset($_SESSION["usuario"])){
             #Cerramos archivo
             fclose($ticket);
 
+            #Actualizamos as cantidades dispoñibles do vehículo comprado.
 
-            echo "Compra feita con éxito! </br></br>";
+            $update = "UPDATE vehiculo_venda SET cantidade= cantidade -1 where modelo='$modelo_compra'";
+
+            if (mysqli_query($mysqli_link, $update)) {
+                echo "Compra feita con éxito! </br></br>";
+            } else {
+                echo "Error:" . mysqli_error($connection);
+            }
+
+            #Eliminamos os vehiculos que quedan a 0 da táboa vehiculos_venda
+            $delete = "DELETE from vehiculo_venda where cantidade='0'";
+            mysqli_query($mysqli_link,$delete);
 
             #Mostramos ticket de la compra
             $file0 = getcwd(); #Función que obtiene la ruta de acceso completa del directorio de trabajo actual, la almacenamos en variable.

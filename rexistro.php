@@ -30,27 +30,47 @@ if (mysqli_connect_errno())
 if ((isset($usuario)) && (isset($contrasinal)) && (isset($nome)) && (isset($direccion)) && (isset($telefono)) && (isset($nifdni)) && (isset($email))) {
 
     
-    #Hacemos las inserciones en la tabla novo_rexitro.
-    $insert = "INSERT INTO novo_rexistro (usuario, contrasinal, nome, direccion, telefono, nifdni, email) VALUES ('$usuario','$contrasinal','$nome','$direccion','$telefono','$nifdni','$email')";
+    #Facemos comprobación de si existe un usuario con ese mesmo nome na táboa de usuario
 
-    $result = mysqli_query($mysqli_link, $insert);
+    $select_user= "SELECT * from usuario where usuario='$usuario'";
+    $result_user = mysqli_query($mysqli_link, $select_user);
 
-    #Comprobamos mediante un if si se ha hecho o no el registro.
+    $num_filas = $result_user->num_rows;
 
-    if ($result) {
-        echo "Se ha registrado correctamente! <br/>";
-        echo "Redirigiendo a la página de inicio";
-        header("refresh: 5; url = index.html");
-    } else {
-        echo "Error al hacer el registro...Volviendo al login";
-        header("refresh: 5; url = index.html");
+    if ($num_filas > 0){
+        echo "Ya existe un usuario con ese mismo nombre. Prueba con otro diferente! </br> </br>" ;
+        echo "Redirigiendo al proceso de rexistro";
+        header("refresh: 5; url = rexistro.html");
     }
+
+    else{
+
+        #El usuario no existe y hacemos las inserciones en la tabla novo_rexitro.
+        $insert = "INSERT INTO novo_rexistro (usuario, contrasinal, nome, direccion, telefono, nifdni, email) VALUES ('$usuario','$contrasinal','$nome','$direccion','$telefono','$nifdni','$email')";
+
+        $result = mysqli_query($mysqli_link, $insert);
+
+        #Comprobamos mediante un if si se ha hecho o no el registro.
+
+        if ($result) {
+            echo "Se ha registrado correctamente! <br/>";
+            echo "Redirigiendo a la página de inicio";
+            header("refresh: 5; url = index.html");
+        } else {
+            echo "Error al hacer el registro...Volviendo al login";
+            header("refresh: 5; url = index.html");
+        }
+
+    }
+
+
+    
     
 
 }
 
 else{
-    echo "hola?";
+    
     #Salta aquí si falta algún dato por introducir.
     echo "Faltan datos por introducir! Volviendo al registro";
     header("refresh: 3; url = rexistro.html");

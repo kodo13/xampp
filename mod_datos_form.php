@@ -30,6 +30,7 @@ if (mysqli_connect_errno())
 if (isset($_REQUEST['cerrar'])){
 
     session_destroy();
+    echo "Sesión pechada! </br>";
     echo "Volvendo á páxina de inicio de sesión...";
             header("refresh: 3; url = index.html");
 
