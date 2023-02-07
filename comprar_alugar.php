@@ -48,7 +48,7 @@ if(!isset($_SESSION["usuario"])){
 
         if ($num_filas_venta > 0) {
 
-            $data = date('y-m-d'); #Recogemos la fecha actual de la compra
+            $data = date('y-m-d-H-i'); #Recogemos la fecha y hora actual de la compra
             #Creamos archivo de texto
 
             #Creamos variable co nome do ficheiro, onde gardamos nome do usuario que compra, modelo e data da compra.
@@ -85,8 +85,11 @@ if(!isset($_SESSION["usuario"])){
 
             fclose($file);
 
+            echo "Volvendo ao menú de usuario...";
+            header("refresh: 3; url = menu_user_form.php");
+
         }
-        
+
         else{
             echo "No se puede realizar la compra!";
         }

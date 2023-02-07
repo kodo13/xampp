@@ -26,57 +26,72 @@ if (mysqli_connect_errno())
     exit;
 }
 
-$usuario=$_SESSION["usuario"];
+#Si escolle pechar a sesión, entra no if e o devolve á páxina principal para iniciar sesión de novo se quere.
+if (isset($_REQUEST['cerrar'])){
 
+    session_destroy();
+    echo "Volvendo á páxina de inicio de sesión...";
+            header("refresh: 3; url = index.html");
 
-$select_u = "SELECT * from usuario where usuario= '$usuario'";
-
-$result_u = mysqli_query($mysqli_link, $select_u);
-
-
-
-
-while ($fila = mysqli_fetch_array($result_u, MYSQLI_ASSOC)) {
-    echo "<br/>";
-    $usuario = $fila['usuario'];
-    $nome = $fila['nome'];
-    $contrasinal = $fila['contrasinal'];
-    $direccion = $fila['direccion'];
-    $telefono = $fila['telefono'];
-    $nifdni = $fila['nifdni'];
-    $email = $fila['email'];
-    $tipo_usuario = $fila['tipo_usuario'];
 
 }
-#Pechamos a conexión.
 
-mysqli_close($mysqli_link);  
 
-#Creamos formulario para la modificación de datos.
+if (isset($_REQUEST['modificar'])){
+    $usuario=$_SESSION["usuario"];
+
+
+    $select_u = "SELECT * from usuario where usuario= '$usuario'";
+
+    $result_u = mysqli_query($mysqli_link, $select_u);
+
+
+
+
+    while ($fila = mysqli_fetch_array($result_u, MYSQLI_ASSOC)) {
+        echo "<br/>";
+        $usuario = $fila['usuario'];
+        $nome = $fila['nome'];
+        $contrasinal = $fila['contrasinal'];
+        $direccion = $fila['direccion'];
+        $telefono = $fila['telefono'];
+        $nifdni = $fila['nifdni'];
+        $email = $fila['email'];
+        $tipo_usuario = $fila['tipo_usuario'];
+
+    }
+    #Pechamos a conexión.
+
+    mysqli_close($mysqli_link);  
+
+
+    #Creamos formulario para la modificación de datos.
+
+    echo "
+    <html>
+
+    <h1>Modificación de Datos</h1>
+
+    <h5> Cambia aquellos datos que quieras modificar</h5>
+
+    <form name='formulario' method='post' action='mod_datos.php' >
+        <!-- No dejamos que modifique el nombre de usuario! -->
+        <p>Usuario <input type='text' name='user' readonly value='$usuario'>>  </p>
+        <p>Contrasinal <input type='password' name='contrasinal_novo' placeholder='Introduzca novo contrasinal' value='$contrasinal'> </p>
+        <p>Nome <input type='text' name='nome_novo' placeholder='Introduzca novo nome' value='$nome'> </p>
+        <p>Direccion <input type='text' name='direccion_novo' placeholder='Introduzca nova direccion' value='$direccion'> </p>
+        <p>Telefono <input type='text' name='telefono_novo' placeholder='Introduzca novo telefono' value='$telefono'> </p>
+        <p>Nifdni <input type='text' name='nifdni_novo' placeholder='Introduzca novo nifdni' value='$nifdni'> </p>
+        <p>Email <input type='text' name='email_novo' placeholder='Introduzca novo email' value='$email'> </p>
+        <!-- No dejamos que modifique el tipo de usuario! -->
+        <p>Tipo usuario <input type='text' name='tipo_user' readonly value='$tipo_usuario'>>  </p>
+
+        <button type='submit' name='modificar' >Modificar os meus datos</button>
+        <br/>
+        
+    </form>
+
+    </html>";
+}
+
 ?>
-
-
-<html>
-
-<h1>Modificación de Datos</h1>
-
-<h5> Cambia aquellos datos que quieras modificar</h5>
-
-<form name="formulario" method="post" action="mod_datos.php" >
-    <!-- No dejamos que modifique el nombre de usuario! -->
-    <p>Usuario <input type="text" name="user" readonly value="<?php echo $usuario; ?>">>  </p>
-    <p>Contrasinal <input type="password" name="contrasinal_novo" placeholder="Introduzca novo contrasinal" value="<?php echo $contrasinal; ?>"> </p>
-    <p>Nome <input type="text" name="nome_novo" placeholder="Introduzca novo nome" value="<?php echo $nome; ?>"> </p>
-    <p>Direccion <input type="text" name="direccion_novo" placeholder="Introduzca nova direccion" value="<?php echo $direccion; ?>"> </p>
-    <p>Telefono <input type="text" name="telefono_novo" placeholder="Introduzca novo telefono" value="<?php echo $telefono; ?>"> </p>
-    <p>Nifdni <input type="text" name="nifdni_novo" placeholder="Introduzca novo nifdni" value="<?php echo $nifdni; ?>"> </p>
-    <p>Email <input type="text" name="email_novo" placeholder="Introduzca novo email" value="<?php echo $email; ?>"> </p>
-    <!-- No dejamos que modifique el tipo de usuario! -->
-    <p>Tipo usuario <input type="text" name="tipo_user" readonly value="<?php echo $tipo_usuario; ?>">>  </p>
-
-    <button type="submit" name="modificar" >Modificar os meus datos</button>
-    <br/>
-    
-</form>
-
-</html>
