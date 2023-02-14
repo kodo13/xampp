@@ -22,6 +22,7 @@ if (mysqli_connect_errno())
 #Si lo está, saltamos al menú de vehículos.
 
 $user=$_SESSION["usuario"];
+
 if(!isset($_SESSION["usuario"])){
     #Si entra aquí, no tiene sesión inciciada y mandamos a login.
     echo "No tienes la sesión iniciada, redireccionando al login... ";
@@ -52,7 +53,7 @@ if(!isset($_SESSION["usuario"])){
                 $email = $fila['email'];
                 $tipo_usuario = 'u';
             
-                
+
                 $insert = "INSERT INTO usuario (usuario, contrasinal, nome, direccion, telefono, nifdni, email, tipo_usuario) VALUES ('$usuario','$contrasinal','$nome','$direccion','$telefono','$nifdni','$email','$tipo_usuario')";
     
                 $result = mysqli_query($mysqli_link, $insert);
@@ -88,31 +89,84 @@ if(!isset($_SESSION["usuario"])){
     
 
 
-    #Proceso de adición de novos vehículos.
-    if (isset($_REQUEST['novos_vehiculos'])){
+    #Proceso de adición de novos vehículos para aluguer.
+    if (isset($_REQUEST['novos_vehiculos_aluguer'])){
 
-    echo "<h3>Proceso de rexistro de novos vehículos</h3>
+    echo "<h3>Proceso de rexistro de novos vehículos para o aluguer</h3>
 
-    <form name='form' method='post' action='rexistro_vehiculo.php'>
+    <form name='form' method='post' action='rexistro_vehiculo_aluguer.php'>
                 
         <p>Modelo <input type='text' name='modelo_novo' placeholder='Introduzca modelo' value=''> </p>
-        <p>Cantidade <input type='text' name='cantidade_novo' placeholder='Introduzca cantidade/s' value=''> </p>
+        <p>Cantidade <input type='number' min='0' name='cantidade_novo' placeholder='Introduzca cantidade/s' value=''> </p>
         <p>Descricion <input type='text' name='descricion_novo' placeholder='Introduzca descricion' value=''> </p>
         <p>Marca <input type='text' name='marca_novo' placeholder='Introduzca marca' value=''> </p>
         <p>Prezo <input type='text' name='prezo_novo' placeholder='Introduzca prezo' value=''> </p>
         <p>Foto <input type='text' name='foto_novo' placeholder='Introduzca url da foto' value=''> </p>
         
-        <button type='submit' name='rexistro_veh' >Rexistrar vehículo</button>
+        <button type='submit' name='rexistro_veh' >Rexistrar vehículo aluguer</button>
 
     </form>";
 
+    }
+
+
+    #Proceso de adición de novos vehículos para a venta
+    if (isset($_REQUEST['novos_vehiculos_venta'])){
+
+        echo "<h3>Proceso de rexistro de novos vehículos para a venda</h3>
+    
+        <form name='form' method='post' action='rexistro_vehiculo_venta.php'>
+                    
+            <p>Modelo <input type='text' name='modelo_novo' placeholder='Introduzca modelo' value=''> </p>
+            <p>Cantidade <input type='number' min='0' name='cantidade_novo' placeholder='Introduzca cantidade/s' value=''> </p>
+            <p>Descricion <input type='text' name='descricion_novo' placeholder='Introduzca descricion' value=''> </p>
+            <p>Marca <input type='text' name='marca_novo' placeholder='Introduzca marca' value=''> </p>
+            <p>Prezo <input type='number' min='0' name='prezo_novo' placeholder='Introduzca prezo' value=''> </p>
+            <p>Foto <input type='text' name='foto_novo' placeholder='Introduzca url da foto' value=''> </p>
+            
+            <button type='submit' name='rexistro_veh' >Rexistrar vehículo venda</button>
+    
+        </form>";
+    
+    }
+
+    #Proceso de eliminar vehículos do aluguer
+    if (isset($_REQUEST['eliminar_aluguer'])){
+
+        echo "<h3>Proceso de eliminar vehículos do aluguer</h3>
+    
+        <form name='form' method='post' action='eliminar.php'>
+                    
+            <p>Modelo <input type='text' name='modelo_eliminar' placeholder='Introduzca modelo a eliminar' value=''> </p>
+            <p>Cantidade <input type='number' min='0' name='cantidade_eliminar' placeholder='Introduzca cantidade/s' value=''> </p>
+            
+            <button type='submit' name='eliminar_alu' >Eliminar vehículo do aluguer</button>
+    
+        </form>";
+    
+    }
+
+    #Proceso de eliminar vehículos da venda
+    if (isset($_REQUEST['eliminar_venda'])){
+
+        echo "<h3>Proceso de eliminar vehículos da venda</h3>
+    
+        <form name='form' method='post' action='eliminar.php'>
+                    
+            <p>Modelo <input type='text' name='modelo_eliminarV' placeholder='Introduzca modelo a eliminar' value=''> </p>
+            <p>Cantidade <input type='number' min='0' name='cantidade_eliminarV' placeholder='Introduzca cantidade/s ' value=''> </p>
+            
+            <button type='submit' name='eliminar_ve' >Eliminar vehículo da venda</button>
+    
+        </form>";
+    
     }
 
 }
 
 
 
-
+mysqli_close($mysqli_link);
 
 
 ?>

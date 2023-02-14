@@ -100,7 +100,7 @@ else {
     if ($num_filas_n>0){
         echo "Existe el usuario pero estamos pendientes de la aprobación del admin</br>";
         echo "Redirigiendo al login...";
-        header("refresh: 5; url = login.php");
+        header("refresh: 5; url = index.html");
     }
     else{
         echo "No existe ninguna cuenta creada con el usuario $usuario, serás redirigido en 5 segundos al registro. ";

@@ -63,14 +63,19 @@ echo "<div align='right'>
         <form  name="formulario" method="post" action="menu_admin.php">
 
             
-            <button type="submit" name="novos_users" ><b>Admitir novos usuarios</b></button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            
-            <button type="submit" name="novos_vehiculos" >Añadir <b>novos vehículos para alugar</b></button>
-            
-           
-            </br></br></br>
-            
+            <button type="submit" name="novos_vehiculos_aluguer" >Añadir <b>novos vehículos para alugar</b></button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" name="eliminar_aluguer" ><b>Elimimar vehículos para aluguer</b></button>
+
+            </br></br>
+            <button type="submit" name="novos_vehiculos_venta" >Añadir <b>novos vehículos para vender</b></button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" name="eliminar_venda" ><b>Eliminar vehículos para a venda</b></button>
+
+            </br></br>
+            <button type="submit" name="novos_users" ><b>Admitir novos usuarios</b></button>  
             
             
 

@@ -35,15 +35,14 @@ if ((isset($modelo)) && (isset($cantidade)) && (isset($descricion)) && (isset($m
     $select_modelo= "SELECT * from vehiculo_aluguer where modelo='$modelo'";
     $result_modelo = mysqli_query($mysqli_link, $select_modelo);
 
-
     $num_filas = $result_modelo->num_rows;
 
     if ($num_filas > 0){
-
-        $update="UPDATE `vehiculo_aluguer` SET cantidade='$cantidade' where modelo='$modelo'";
-        $result_update = mysqli_query($mysqli_link, $update);
+        #Si existen vehículos, á cantidade que había se lle suman as cantidades do rexistro.
+        $update="UPDATE `vehiculo_aluguer` SET cantidade=cantidade +$cantidade where modelo='$modelo'";
+        
         if (mysqli_query($mysqli_link, $update)) {
-            echo "Xa existe ese modelo rexistrado, actualizamos a cantidade do modelo $modelo a $cantidade cantidades </br> </br>" ;
+            echo "Xa existe ese modelo rexistrado, actualizamos as cantidades do modelo $modelo. </br> </br>" ;
             echo "Volvendo ao menú de admin";
             header("refresh: 5; url = menu_admin_form.php");
         } else {

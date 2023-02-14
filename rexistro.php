@@ -30,9 +30,9 @@ if (mysqli_connect_errno())
 if ((isset($usuario)) && (isset($contrasinal)) && (isset($nome)) && (isset($direccion)) && (isset($telefono)) && (isset($nifdni)) && (isset($email))) {
 
     
-    #Facemos comprobación de si existe un usuario con ese mesmo nome na táboa de usuario
+    #Facemos comprobación de si existe un usuario con ese mesmo nome na táboa de usuario ou na de novo_rexitro
 
-    $select_user= "SELECT * from usuario where usuario='$usuario'";
+    $select_user= "SELECT usuario FROM usuario WHERE usuario = '$usuario' UNION SELECT usuario FROM novo_rexistro WHERE usuario = '$usuario'";
     $result_user = mysqli_query($mysqli_link, $select_user);
 
     $num_filas = $result_user->num_rows;

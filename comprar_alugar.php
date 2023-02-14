@@ -115,7 +115,7 @@ if(!isset($_SESSION["usuario"])){
     #Si escolleu a opción de alugar vehículo...
     if(isset($_REQUEST['aluguer'])){
         #Recollemos modelo escollido polo usuario
-    $modelo= $_REQUEST['alugar'];
+        $modelo= $_REQUEST['alugar'];
 
         $select_aluguer = "SELECT * FROM vehiculo_aluguer WHERE modelo='$modelo'";
         $result_aluguer = mysqli_query($mysqli_link, $select_aluguer);
@@ -133,11 +133,11 @@ if(!isset($_SESSION["usuario"])){
 
 
         if ($cantidade > 0){
-            $cantidade = ($cantidade - 1); 
+            #$cantidade = ($cantidade - 1); 
             
             #Hacemos update para quitar una unidad disponible del vehículo.
             
-            $update= "UPDATE vehiculo_aluguer SET cantidade='$cantidade' WHERE modelo= '$modelo'";
+            $update= "UPDATE vehiculo_aluguer SET cantidade=cantidade -1 WHERE modelo= '$modelo'";
 
             $result_update = mysqli_query($mysqli_link, $update);
 
