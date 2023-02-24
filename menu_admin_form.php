@@ -67,20 +67,40 @@ echo "<div align='right'>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="submit" name="eliminar_aluguer" ><b>Elimimar vehículos para aluguer</b></button>
-
+          
             </br></br>
             <button type="submit" name="novos_vehiculos_venta" >Añadir <b>novos vehículos para vender</b></button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="submit" name="eliminar_venda" ><b>Eliminar vehículos para a venda</b></button>
+           
 
             </br></br>
+            </br></br>
+
             <button type="submit" name="novos_users" ><b>Admitir novos usuarios</b></button>  
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" name="devolver_veh" ><b>Devolver vehiculos devoltos</b></button>
             
             
 
         </form>
+</br></br>
+        <form  name="formulario" method="post" action="modificar_veh_admin.php">
 
+            <button type="submit" name="modificar_aluguer" ><b>Modificar vehículos para aluguer</b></button>
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" name="modificar_aluguer" ><b>Modificar vehículos para venda</b></button>
+
+            </br></br>
+        </form>
 
         <br></br>
         
