@@ -33,6 +33,7 @@ if(!isset($_SESSION["usuario"])){
     #Comprobamos que quiere ver el usuario.
     #Si quiere ver los vehículos a la venta, se los mostramos, si no se cumple la condición, saltamos al siguiente if.
     
+    #Lista de vehículos á venda, vista user
     if (isset($_REQUEST['lista_venda'])){
 
         #Ejecutamos la consulta para recoger los vehículos a la venta.
@@ -67,11 +68,11 @@ if(!isset($_SESSION["usuario"])){
                 
 
     }
-
+    #Listado de vehículos en aluguer, vista user
     if(isset($_REQUEST['lista_aluguer'])){
         #Realizamos consulta para recoger los vehiculos en aluguer.
         $select_aluguer = "SELECT * FROM vehiculo_aluguer where cantidade > '0'"; #Si existen vehículos sin existencias para alugar, 
-        #entonces no se muestran en la lista. Solo mostramops los disponibles.
+        #entonces no se muestran en la lista. Solo mostramos los disponibles.
 
         $result_aluguer = mysqli_query($mysqli_link, $select_aluguer);
         $num_filas_aluguer=$result_aluguer->num_rows;
@@ -103,6 +104,76 @@ if(!isset($_SESSION["usuario"])){
 
 
         
+    }
+
+    #Sacamos informe de vehículo en aluguer, vista de admin xa que un user non verá un vehículo se ten cantidae 0, pero un admin si.
+    if(isset($_REQUEST['lista_aluguer_admin'])){
+        #Realizamos consulta para recoger los vehiculos en aluguer.
+        $select_aluguer = "SELECT * FROM vehiculo_aluguer"; #Mostramos todos os vehículos da táboa
+
+        $result_aluguer = mysqli_query($mysqli_link, $select_aluguer);
+        $num_filas_aluguer=$result_aluguer->num_rows;
+
+        echo "<br><b> Vehículos en aluguer</b><br>";
+
+        #Mostramos los vehículos mediante un bucle while que va leyendo línea a línea y mostrando los resultados de cada vez.
+        
+        
+        while ($fila = mysqli_fetch_array($result_aluguer, MYSQLI_ASSOC)) {
+            echo "<br/>";
+            echo "Modelo: " . $fila['modelo'] . "<br/>";
+            echo "Cantidade: " . $fila['cantidade'] . "<br/>";
+            echo "Descrición: " . $fila['descricion'] . "<br/>";
+            echo "Marca: " . $fila['marca'] . "<br/>";
+            echo "Prezo: " . $fila['prezo'] . "<br/>";
+            echo "Foto: <img src= ' ". $fila['foto'] . " ' width='350' height='250'> <br/>";
+            echo "<br/></br>";
+        }
+        
+        #Creamos botón para volver ao menú principal
+        echo "
+        <form name='formulario' method='post' action='menu_admin_form.php'>
+            <button type='submit' name='volver' ><b>Volver menú de admin</b></button>
+
+        </form>        
+        ";
+
+    }
+
+    #Informe de vehículos á venda, vista admin
+    if (isset($_REQUEST['lista_venda_admin'])){
+
+        #Ejecutamos la consulta para recoger los vehículos a la venta.
+        $select_venta = "SELECT * FROM vehiculo_venda";
+        $result_venta = mysqli_query($mysqli_link, $select_venta);
+        $num_filas_venta = $result_venta->num_rows;
+
+        #Mostramos los vehículos a la venta.
+        echo "<br><b> Vehículos en venta</b><br>";
+        
+        #Mostramos los vehículos mediante un bucle while que va leyendo línea a línea y mostrando los resultados de cada vez.
+        
+
+        while ($fila = mysqli_fetch_array($result_venta, MYSQLI_ASSOC)) {
+            echo "<br/>";
+            echo "Modelo: " . $fila['modelo'] . "<br/>";
+            echo "Cantidade: " . $fila['cantidade'] . "<br/>";
+            echo "Descrición: " . $fila['descricion'] . "<br/>";
+            echo "Marca: " . $fila['marca'] . "<br/>";
+            echo "Prezo: " . $fila['prezo'] . "<br/>";
+            echo "Foto: <img src= ' ". $fila['foto'] ." ' width='350' height='250'> <br/>";
+            echo "<br/>";
+        }
+        #Creamos botón para volver ao menú principal
+        echo "
+        <form name='formulario' method='post' action='menu_admin_form.php'>
+            <button type='submit' name='volver' ><b>Volver menú principal</b></button>
+
+        </form>        
+        ";
+       
+                
+
     }
 }
 

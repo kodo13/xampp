@@ -162,6 +162,55 @@ if(!isset($_SESSION["usuario"])){
     
     }
 
+    #Proceso de admisión de vehículos devoltos a vehículos en aluguer..
+    if (isset($_REQUEST['devolver_veh'])){
+
+        $select_u = "SELECT * from vehiculo_devolto";
+        $result_u = mysqli_query($mysqli_link, $select_u);
+
+        $num_filas = $result_u->num_rows;
+        if ($num_filas>0){
+            while ($fila = mysqli_fetch_array($result_u, MYSQLI_ASSOC)) {
+            
+                $modelo = $fila['modelo'];
+                $cantidade = $fila['cantidade'];
+                $descricion = $fila['descricion'];
+                $marca = $fila['marca'];
+                $foto = $fila['foto'];
+              
+            
+                $update = "UPDATE vehiculo_aluguer SET cantidade=cantidade + $cantidade WHERE modelo='$modelo'" ; 
+                
+                $result = mysqli_query($mysqli_link, $update);
+    
+                echo "Modelo <b>$modelo</b> devolto e actualizado correctamente! Cantidades devoltas: <b>$cantidade</b> </br></br>";
+            }
+    
+            #Eliminamos todos los datos de la tabla vehiculo_devolto que xa se admitiron
+            
+            $query = "TRUNCATE table vehiculo_devolto";
+    
+            if (mysqli_query($mysqli_link, $query)) {
+                echo "Datos borrados da táboa vehiculo_devolto! </br></br>";
+                echo "Volvendo ao menú admin... </br>";
+                header("refresh: 7; url = menu_admin_form.php");
+            } else {
+                echo "Error:" . mysqli_error($connection);
+            }
+    
+            
+        }
+        #Si no existen usuarios a añadir...
+        else{
+            echo "Non existe ningún vehículo pendente de delvolver ao aluguer </br>";
+            echo "Volvendo ao menú admin... </br>";
+            header("refresh: 5; url = menu_admin_form.php");
+        }
+        
+                    
+
+    }
+
 }
 
 

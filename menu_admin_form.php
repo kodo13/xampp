@@ -60,6 +60,19 @@ echo "<div align='right'>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        
 
+
+
+        <!--Formulario en el cual tenemos solo los botones de listar los vehiculos -->
+        <form  name="formulario" method="post" action="lista_vehiculos.php">
+            <button type="submit" name="lista_aluguer_admin" >Lista coches e motos en <b>aluguer</b></button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" name="lista_venda_admin" >Lista coches e motos á <b>venda</b></button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </form>
+
+        <!--Formulario con las demás opciones -->
         <form  name="formulario" method="post" action="menu_admin.php">
 
             
@@ -97,7 +110,7 @@ echo "<div align='right'>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="submit" name="modificar_aluguer" ><b>Modificar vehículos para venda</b></button>
+            <button type="submit" name="modificar_venda" ><b>Modificar vehículos para venda</b></button>
 
             </br></br>
         </form>
