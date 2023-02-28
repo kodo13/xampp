@@ -36,101 +36,125 @@ if (mysqli_connect_errno())
 if(!isset($_SESSION["usuario"])){
     #Si entra aquí, no tiene sesión iniciada y mandamos a login.
     echo "No tienes la sesión iniciada, redireccionando al login... ";
+    mysqli_close($mysqli_link);
     header("refresh: 5; url = index.html");
     
 }else{
     
     echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div><br>";
     
+    
 
-    #Se escolleu a opción de modifcar os datos de vehiculo_aluguer...
+    #Se escolleu a opción de modificar os datos de vehiculo_aluguer...
     if (isset($_REQUEST['mod_datos_aluguer'])){
         
+        #Comprobamos que non haxan campos vacíos
+        if (!empty($cantidade) && !empty($descricion) && !empty($marca) && !empty($prezo) && !empty($foto) ) {
         
-        $update= "UPDATE vehiculo_aluguer SET cantidade='$cantidade',descricion='$descricion',marca='$marca',prezo='$prezo',foto='$foto' WHERE modelo= '$modelo'";
-        $result = mysqli_query($mysqli_link, $update);
-        #Se devuelve TRUE si se ejecutó la consulta correctamente.
-        
-        if( $result){ #Si verdadero, entonces fíxose correctamente o update
-            echo "Os datos do modelo $modelo foron modificados! Volvendo ao menú...";
+
+            #Facemos update cos datos a modificar
+            $update= "UPDATE vehiculo_aluguer SET cantidade='$cantidade',descricion='$descricion',marca='$marca',prezo='$prezo',foto='$foto' WHERE modelo= '$modelo'";
+            $result = mysqli_query($mysqli_link, $update);
+            #Se devuelve TRUE si se ejecutó la consulta correctamente.
             
-            header("refresh: 5; url = menu_admin_form.php");
+            if( $result){ #Si verdadero, entonces fíxose correctamente o update
+                echo "Os datos do modelo $modelo foron modificados! Volvendo ao menú...";
+                mysqli_close($mysqli_link);
+                header("refresh: 5; url = menu_admin_form.php");
+            }
+            else{
+                echo "Error ao modificar os datos!" . mysqli_error($mysqli_link);
+                echo "Volvendo ao menú do admin...";
+                mysqli_close($mysqli_link);
+                header("refresh: 5; url = menu_admin_form.php");
+            }
+            
+            
+
+            #Mostramos os novos datos actualizados do modelo
+            $select_u = "SELECT * from vehiculo_aluguer where modelo= '$modelo'";
+            
+            $result_u = mysqli_query($mysqli_link, $select_u);
+            $num_filas_u = $result_u->num_rows;
+
+            echo "<br><b> Os novos datos actualizados son: </b><br>";
+            
+
+            while ($fila = mysqli_fetch_array($result_u, MYSQLI_ASSOC)) {
+                echo "<br/>";
+                echo "Modelo: " . $fila['modelo'] . "<br/>";
+                echo "Cantidade: " . $fila['cantidade'] . "<br/>";
+                echo "Descricion: " . $fila['descricion'] . "<br/>";
+                echo "Marca: " . $fila['marca'] . "<br/>";
+                echo "Prezo: " . $fila['Prezo'] . "<br/>";
+                echo "Foto: " . $fila['foto'] . "<br/>";
+                echo "<br/>";
+            }
+            
+            
+            
         }
         else{
-            echo "Error ao modificar os datos!" . mysqli_error($mysqli_link);
-            echo "Volvendo ao menú do admin...";
+            echo "Faltaron datos por introducir! </br>";
+            echo "Volvendo ao menú admin";
+            mysqli_close($mysqli_link);
             header("refresh: 5; url = menu_admin_form.php");
         }
-        
-        
-
-        #Mostramos os novos datos actualizados do modelo
-        $select_u = "SELECT * from vehiculo_aluguer where modelo= '$modelo'";
-        
-        $result_u = mysqli_query($mysqli_link, $select_u);
-        $num_filas_u = $result_u->num_rows;
-
-        echo "<br><b> Os novos datos actualizados son: </b><br>";
-        
-
-        while ($fila = mysqli_fetch_array($result_u, MYSQLI_ASSOC)) {
-            echo "<br/>";
-            echo "Modelo: " . $fila['modelo'] . "<br/>";
-            echo "Cantidade: " . $fila['cantidade'] . "<br/>";
-            echo "Descricion: " . $fila['descricion'] . "<br/>";
-            echo "Marca: " . $fila['marca'] . "<br/>";
-            echo "Prezo: " . $fila['Prezo'] . "<br/>";
-            echo "Foto: " . $fila['foto'] . "<br/>";
-            echo "<br/>";
-        }
-        
-        
-        
     }
+    
 
     #Se se quere modificar os datos de vehiculo_venda
     if (isset($_REQUEST['mod_datos_venda'])){
         
-        
-        $update= "UPDATE vehiculo_venda SET cantidade='$cantidade',descricion='$descricion',marca='$marca',prezo='$prezo',foto='$foto' WHERE modelo= '$modelo'";
-        $result = mysqli_query($mysqli_link, $update);
-        #Se devuelve TRUE si se ejecutó la consulta correctamente.
-        
-        if( $result){ #Si verdadero, entonces fíxose correctamente o update
-            echo "Os datos do modelo $modelo foron modificados! Volvendo ao menú...";
+        #Comprobamos que non haxan campos vacíos
+        if (!empty($cantidade) && !empty($descricion) && !empty($marca) && !empty($prezo) && !empty($foto) ) {
+
+            $update= "UPDATE vehiculo_venda SET cantidade='$cantidade',descricion='$descricion',marca='$marca',prezo='$prezo',foto='$foto' WHERE modelo= '$modelo'";
+            $result = mysqli_query($mysqli_link, $update);
+            #Se devuelve TRUE si se ejecutó la consulta correctamente.
             
-            header("refresh: 5; url = menu_admin_form.php");
+            if( $result){ #Si verdadero, entonces fíxose correctamente o update
+                echo "Os datos do modelo $modelo foron modificados! Volvendo ao menú...";
+                mysqli_close($mysqli_link);
+                header("refresh: 5; url = menu_admin_form.php");
+            }
+            else{
+                echo "Error ao modificar os datos!" . mysqli_error($mysqli_link);
+                echo "Volvendo ao menú do admin...";
+                mysqli_close($mysqli_link);
+                header("refresh: 5; url = menu_admin_form.php");
+            }
+            
+            
+
+            #Mostramos os novos datos actualizados do modelo
+            $select_u = "SELECT * from vehiculo_venda where modelo= '$modelo'";
+            
+            $result_u = mysqli_query($mysqli_link, $select_u);
+            $num_filas_u = $result_u->num_rows;
+
+            echo "<br><b> Os novos datos actualizados son: </b><br>";
+            
+
+            while ($fila = mysqli_fetch_array($result_u, MYSQLI_ASSOC)) {
+                echo "<br/>";
+                echo "Modelo: " . $fila['modelo'] . "<br/>";
+                echo "Cantidade: " . $fila['cantidade'] . "<br/>";
+                echo "Descricion: " . $fila['descricion'] . "<br/>";
+                echo "Marca: " . $fila['marca'] . "<br/>";
+                echo "Prezo: " . $fila['Prezo'] . "<br/>";
+                echo "Foto: " . $fila['foto'] . "<br/>";
+                echo "<br/>";
+            }
+            
         }
         else{
-            echo "Error ao modificar os datos!" . mysqli_error($mysqli_link);
-            echo "Volvendo ao menú do admin...";
+            echo "Faltaron datos por introducir! </br>";
+            echo "Volvendo ao menú admin";
+            mysqli_close($mysqli_link);
             header("refresh: 5; url = menu_admin_form.php");
-        }
-        
-        
-
-        #Mostramos os novos datos actualizados do modelo
-        $select_u = "SELECT * from vehiculo_venda where modelo= '$modelo'";
-        
-        $result_u = mysqli_query($mysqli_link, $select_u);
-        $num_filas_u = $result_u->num_rows;
-
-        echo "<br><b> Os novos datos actualizados son: </b><br>";
-        
-
-        while ($fila = mysqli_fetch_array($result_u, MYSQLI_ASSOC)) {
-            echo "<br/>";
-            echo "Modelo: " . $fila['modelo'] . "<br/>";
-            echo "Cantidade: " . $fila['cantidade'] . "<br/>";
-            echo "Descricion: " . $fila['descricion'] . "<br/>";
-            echo "Marca: " . $fila['marca'] . "<br/>";
-            echo "Prezo: " . $fila['Prezo'] . "<br/>";
-            echo "Foto: " . $fila['foto'] . "<br/>";
-            echo "<br/>";
-        }
-        
-        
-        
+        }  
+            
     }
 
 }

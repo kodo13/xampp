@@ -26,22 +26,37 @@ $user=$_SESSION["usuario"];
 if(!isset($_SESSION["usuario"])){
     #Si entra aquí, no tiene sesión inciciada y mandamos a login.
     echo "No tienes la sesión iniciada, redireccionando al login... ";
+    mysqli_close($mysqli_link);
     header("refresh: 5; url = index.html");
 
 }else{
 
     echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div><br>";
+
+    #Creamos botón para volver ao menú principal
+
+    echo "
+
+    <form name='formulario' method='post' action='menu_admin_form.php'>
+
+    <button type='submit' name='volver' ><b>Volver menú admin</b></button>
+
+    </form>
+
+    ";
     
     #Comprobamos que quere facer o admin
     
     #Proceso de admisión de novos usuarios.
     if (isset($_REQUEST['novos_users'])){
 
+        #Recollemos os datos da táboa novo_rexistro
         $select_u = "SELECT * from novo_rexistro";
         $result_u = mysqli_query($mysqli_link, $select_u);
 
         $num_filas = $result_u->num_rows;
         if ($num_filas>0){
+            #Recorremos o array cos datos para gardalas en variables e facer o inserte por cada vez que se recorra o bucle, ata que non queden datos
             while ($fila = mysqli_fetch_array($result_u, MYSQLI_ASSOC)) {
             
                 $usuario = $fila['usuario'];
@@ -61,13 +76,14 @@ if(!isset($_SESSION["usuario"])){
                 echo "Usuario <b>$usuario</b> admitido correctamente! </br></br>";
             }
     
-            #Eliminamos todos los datos de la tabla novo_rexistro que ya pasamos a usuarios
+            #Eliminamos todos os datos da táboa novo_rexistro, que xa foron admitidos como usuarios.
             
             $query = "TRUNCATE table novo_rexistro";
     
             if (mysqli_query($mysqli_link, $query)) {
                 echo "Datos borrados da táboa novo_rexistro! </br></br>";
                 echo "Volvendo ao menú admin... </br>";
+                mysqli_close($mysqli_link);
                 header("refresh: 7; url = menu_admin_form.php");
             } else {
                 echo "Error:" . mysqli_error($connection);
@@ -79,6 +95,7 @@ if(!isset($_SESSION["usuario"])){
         else{
             echo "Non existe ningún rexistro de usuario pendiente </br>";
             echo "Volvendo ao menú admin... </br>";
+            mysqli_close($mysqli_link);
             header("refresh: 5; url = menu_admin_form.php");
         }
         
@@ -165,6 +182,7 @@ if(!isset($_SESSION["usuario"])){
     #Proceso de admisión de vehículos devoltos a vehículos en aluguer..
     if (isset($_REQUEST['devolver_veh'])){
 
+        #Recollemos os datos dos vehiculos da táboa de devoltos
         $select_u = "SELECT * from vehiculo_devolto";
         $result_u = mysqli_query($mysqli_link, $select_u);
 
@@ -178,7 +196,7 @@ if(!isset($_SESSION["usuario"])){
                 $marca = $fila['marca'];
                 $foto = $fila['foto'];
               
-            
+                #Facemos un update do modelo a devolver, na táboa de vehículo_aluguer coa cantidade que existe máis a cantidade a devolver.
                 $update = "UPDATE vehiculo_aluguer SET cantidade=cantidade + $cantidade WHERE modelo='$modelo'" ; 
                 
                 $result = mysqli_query($mysqli_link, $update);
@@ -186,13 +204,14 @@ if(!isset($_SESSION["usuario"])){
                 echo "Modelo <b>$modelo</b> devolto e actualizado correctamente! Cantidades devoltas: <b>$cantidade</b> </br></br>";
             }
     
-            #Eliminamos todos los datos de la tabla vehiculo_devolto que xa se admitiron
+            #Eliminamos todos os modelos da táboa vehiculo_devolto que xa se admitiron
             
             $query = "TRUNCATE table vehiculo_devolto";
     
             if (mysqli_query($mysqli_link, $query)) {
                 echo "Datos borrados da táboa vehiculo_devolto! </br></br>";
                 echo "Volvendo ao menú admin... </br>";
+                mysqli_close($mysqli_link);
                 header("refresh: 7; url = menu_admin_form.php");
             } else {
                 echo "Error:" . mysqli_error($connection);
@@ -204,6 +223,7 @@ if(!isset($_SESSION["usuario"])){
         else{
             echo "Non existe ningún vehículo pendente de delvolver ao aluguer </br>";
             echo "Volvendo ao menú admin... </br>";
+            mysqli_close($mysqli_link);
             header("refresh: 5; url = menu_admin_form.php");
         }
         

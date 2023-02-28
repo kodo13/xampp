@@ -19,11 +19,24 @@ session_start();
 if(!isset($_SESSION["usuario"])){
     #Si entra aquí, no tiene sesión iniciada y mandamos a login.
     echo "No tienes la sesión iniciada, redireccionando al login... ";
+    mysqli_close($mysqli_link);
     header("refresh: 5; url = index.html");
     
 }else{
     
     echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div><br>";
+
+    #Creamos botón para volver ao menú principal
+
+    echo "
+
+    <form name='formulario' method='post' action='menu_admin_form.php'>
+
+    <button type='submit' name='volver' ><b>Volver menú admin</b></button>
+
+    </form>
+
+    ";
 }
 
 
@@ -57,7 +70,7 @@ if (isset($_REQUEST['modificar_aluguer'])){
 
 
 
-#Ao pulsar o botón de seleccionar modelo na opcion de modficar veh_aluguer...
+#Ao pulsar o botón de seleccionar modelo na opcion de modificar veh_aluguer...
 if (isset($_REQUEST['mod_veh'])){
 
     #Recollemos o modelo seleccionado 
@@ -122,6 +135,7 @@ if (isset($_REQUEST['mod_veh'])){
         
         echo "Se desexa introducir un novo vehículo, selecciona o botón de <b>Añadir novos vehículos para alugar</b> do menú admin.</br>";
         echo "Volvendo ao menú admin...";
+        mysqli_close($mysqli_link);
         header("refresh: 5; url = menu_admin_form.php");
     }
     
@@ -224,6 +238,7 @@ if (isset($_REQUEST['mod_vehV'])){
         
         echo "Se desexa introducir un novo vehículo, selcciona o botón de <b>Añadir novos vehículos para a venda</b> do menú admin.</br>";
         echo "Volvendo ao menú admin...";
+        mysqli_close($mysqli_link);
         header("refresh: 5; url = menu_admin_form.php");
     }
     

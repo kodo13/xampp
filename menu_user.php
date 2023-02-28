@@ -1,6 +1,5 @@
 <?php  
 
-#Menú donde se listan los coches los coches de aluguer o venta.
 
 # Iniciamos la sesión
 session_start();
@@ -22,14 +21,25 @@ if (mysqli_connect_errno())
 #Si lo está, saltamos al menú de vehículos.
 
 $user=$_SESSION["usuario"];
+
 if(!isset($_SESSION["usuario"])){
     #Si entra aquí, no tiene sesión inciciada y mandamos a login.
     echo "No tienes la sesión iniciada, redireccionando al login... ";
+    mysqli_close($mysqli_link);
     header("refresh: 5; url = index.html");
 
 }else{
 
     echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div><br>";
+
+    #Creamos botón para volver ao menú principal
+    echo "
+    <form name='formulario' method='post' action='menu_user_form.php'>
+        <button type='submit' name='volver' ><b>Volver menú principal</b></button>
+
+    </form>        
+    ";
+
     #Comprobamos que quiere ver el usuario.
     #Si quiere ver los vehículos a la venta, se los mostramos, si no se cumple la condición, saltamos al siguiente if.
     
@@ -63,6 +73,7 @@ if(!isset($_SESSION["usuario"])){
 
     }
 
+    #Se o usuario escolle a opción de aluguer...
     if(isset($_REQUEST['aluguer'])){
         #Realizamos consulta para recoger los vehiculos en aluguer.
         $select_aluguer = "SELECT * FROM vehiculo_aluguer where cantidade > '0'"; #Si existen vehículos sin existencias para alugar, 
@@ -93,7 +104,7 @@ if(!isset($_SESSION["usuario"])){
         echo "<p><input type='submit' name='aluguer' value='Alugar'></p>  
                 </form>";
     }
-        #Con name="aluguer", hacemos distinción 
+        #Con name="aluguer", facemos distinción 
 
     
 

@@ -22,9 +22,11 @@ if (mysqli_connect_errno())
 #Si lo está, saltamos al menú de vehículos.
 
 $user=$_SESSION["usuario"];
+
 if(!isset($_SESSION["usuario"])){
     #Si entra aquí, no tiene sesión inciciada y mandamos a login.
     echo "No tienes la sesión iniciada, redireccionando al login... ";
+    mysqli_close($mysqli_link);
     header("refresh: 5; url = index.html");
 
 }else{
@@ -36,6 +38,17 @@ if(!isset($_SESSION["usuario"])){
     #Lista de vehículos á venda, vista user
     if (isset($_REQUEST['lista_venda'])){
 
+        #Creamos botón para volver ao menú principal
+
+        echo "
+
+        <form name='formulario' method='post' action='menu_user_form.php'>
+
+        <button type='submit' name='volver' ><b>Volver menú principal</b></button>
+
+        </form>
+
+        ";
         #Ejecutamos la consulta para recoger los vehículos a la venta.
         $select_venta = "SELECT * FROM vehiculo_venda";
         $result_venta = mysqli_query($mysqli_link, $select_venta);
@@ -70,6 +83,17 @@ if(!isset($_SESSION["usuario"])){
     }
     #Listado de vehículos en aluguer, vista user
     if(isset($_REQUEST['lista_aluguer'])){
+
+
+        echo "
+
+        <form name='formulario' method='post' action='menu_user_form.php'>
+
+        <button type='submit' name='volver' ><b>Volver menú principal</b></button>
+
+        </form>
+
+        ";
         #Realizamos consulta para recoger los vehiculos en aluguer.
         $select_aluguer = "SELECT * FROM vehiculo_aluguer where cantidade > '0'"; #Si existen vehículos sin existencias para alugar, 
         #entonces no se muestran en la lista. Solo mostramos los disponibles.
@@ -108,6 +132,17 @@ if(!isset($_SESSION["usuario"])){
 
     #Sacamos informe de vehículo en aluguer, vista de admin xa que un user non verá un vehículo se ten cantidae 0, pero un admin si.
     if(isset($_REQUEST['lista_aluguer_admin'])){
+
+
+        echo "
+
+        <form name='formulario' method='post' action='menu_admin_form.php'>
+
+        <button type='submit' name='volver' ><b>Volver menú admin</b></button>
+
+        </form>
+
+        ";
         #Realizamos consulta para recoger los vehiculos en aluguer.
         $select_aluguer = "SELECT * FROM vehiculo_aluguer"; #Mostramos todos os vehículos da táboa
 
@@ -133,7 +168,7 @@ if(!isset($_SESSION["usuario"])){
         #Creamos botón para volver ao menú principal
         echo "
         <form name='formulario' method='post' action='menu_admin_form.php'>
-            <button type='submit' name='volver' ><b>Volver menú de admin</b></button>
+            <button type='submit' name='volver' ><b>Volver menú admin</b></button>
 
         </form>        
         ";
@@ -143,6 +178,15 @@ if(!isset($_SESSION["usuario"])){
     #Informe de vehículos á venda, vista admin
     if (isset($_REQUEST['lista_venda_admin'])){
 
+        echo "
+
+        <form name='formulario' method='post' action='menu_admin_form.php'>
+
+        <button type='submit' name='volver' ><b>Volver menú admin</b></button>
+
+        </form>
+
+        ";
         #Ejecutamos la consulta para recoger los vehículos a la venta.
         $select_venta = "SELECT * FROM vehiculo_venda";
         $result_venta = mysqli_query($mysqli_link, $select_venta);
@@ -164,10 +208,12 @@ if(!isset($_SESSION["usuario"])){
             echo "Foto: <img src= ' ". $fila['foto'] ." ' width='350' height='250'> <br/>";
             echo "<br/>";
         }
+
+        
         #Creamos botón para volver ao menú principal
         echo "
         <form name='formulario' method='post' action='menu_admin_form.php'>
-            <button type='submit' name='volver' ><b>Volver menú principal</b></button>
+            <button type='submit' name='volver' ><b>Volver menú admin</b></button>
 
         </form>        
         ";

@@ -1,6 +1,6 @@
 <?php  
 
-#Menú de admin onde elixe si admite novos usuarios ou mete novos vehículos.
+#Menú de admin
 
 
 # Iniciamos la sesión
@@ -23,9 +23,11 @@ if (mysqli_connect_errno())
 #Si lo está, saltamos al menú de vehículos.
 
 $user=$_SESSION["usuario"];
+
 if(!isset($_SESSION["usuario"])){
     #Si entra aquí, no tiene sesión inciciada y mandamos a login.
     echo "No tienes la sesión iniciada, redireccionando al login... ";
+    mysqli_close($mysqli_link);
     header("refresh: 5; url = index.html");
 
 }else{
@@ -48,6 +50,7 @@ echo "<div align='right'>
 }
 
 ?>
+
 
 <html>
     <head>

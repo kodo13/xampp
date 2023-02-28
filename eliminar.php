@@ -1,9 +1,5 @@
 <?php
 
-#Recogemos variables del  formulario de rexistro.
-
-
-
 
 #Creamos la conexión con la base de datos
 
@@ -23,17 +19,19 @@ if (mysqli_connect_errno()){
 #Se escolleu a opción de eliminar vehiculos do aluguer
 if (isset($_REQUEST['eliminar_alu'])){
     $modelo = $_REQUEST['modelo_eliminar']; 
-    $cantidade = $_REQUEST['cantidade_eliminar']; #Cantidade a retirar introducida polo admin
+    $cantidade = $_REQUEST['cantidade_eliminar']; #Recollemos a cantidade a retirar introducida polo admin
 
     #Si se cubriron os campos...
     if (isset($modelo) && isset($cantidade)){
 
-    
+        
         $select_eliminar = "SELECT * from vehiculo_aluguer where modelo='$modelo'";
         $result_eliminar = mysqli_query($mysqli_link,$select_eliminar);
         $num_filas = $result_eliminar->num_rows;
+
         $fila = mysqli_fetch_array($result_eliminar, MYSQLI_ASSOC);
-        #Guardamos la cantidade actual del modelo introducido por el admin
+
+        #Gardamos a cantidade introducida polo admin
         $cant = $fila['cantidade'];
         
         #Gardamos na variable resto o número de vehículos que quedan.
@@ -45,12 +43,12 @@ if (isset($_REQUEST['eliminar_alu'])){
 
             //Si a cantidade introducida é menor que a que temos...
             if ($cantidade < $cant){
-
-            $u="UPDATE vehiculo_aluguer SET cantidade=$resto where modelo='$modelo'";
+                #Actualizamos á cantidade
+                $u="UPDATE vehiculo_aluguer SET cantidade=$resto where modelo='$modelo'";
 
                 $result_u = mysqli_query($mysqli_link,$u);
 
-                #Si se realiza correctamente el update...
+                #Si se realiza correctamente o update...
                 if ($result_u){
 
                     echo "</br> Quitáronse ".$cantidade." cantidades do modelo ".$modelo.", quedan ".$resto." </br>";
@@ -74,17 +72,18 @@ if (isset($_REQUEST['eliminar_alu'])){
             }
 
 
-            #Si la cantidad que se quiere quitar es mayor a la que tenemos...
+            #Si a cantidade introducida é maior que a cantidade que existe...
             elseif ($cantidade > $cant){
-                #OJO!! En SET cantidade='cantidade - $cantidade' --> no poner comillas si no da error
+                #OLLO!! En SET cantidade='cantidade - $cantidade' --> non poñer comillas senón da erro
                 $update="UPDATE vehiculo_aluguer SET cantidade=cantidade - $cant where modelo='$modelo'";
                 $result_update= mysqli_query($mysqli_link,$update);
                 
+                #Comprobamos resultado do update
                 if ($result_update){
                     
                     echo "Quitáronse ".$cant." cantidades do modelo ".$modelo.", non ".$cantidade." xa que non había tantas unidades. </br>";
                     
-
+                    #Eliminamos o modelo que quedou a 0
                     $delete="DELETE FROM vehiculo_aluguer WHERE cantidade=0 and modelo = '$modelo'";
                     $result_delete = mysqli_query($mysqli_link,$delete);
 
@@ -101,7 +100,7 @@ if (isset($_REQUEST['eliminar_alu'])){
             
 
             }
-            #Si no, lo introducido es igual a lo que tenemos...
+            #Senón, queda a opción de que a cantidade introducida é a mesma que a existente.
             else{
                 $update2="UPDATE vehiculo_aluguer SET cantidade=0 where modelo='$modelo'";
                 $result_update2= mysqli_query($mysqli_link,$update2);
@@ -153,6 +152,7 @@ if (isset($_REQUEST['eliminar_ve'])){
     #Recollemos os datos introducidos polo admin 
     $modelo = $_REQUEST['modelo_eliminarV']; 
     $cantidade = $_REQUEST['cantidade_eliminarV'];
+
     #Si se cubriron os campos...
     if (isset($modelo) && isset($cantidade)){
          #Cantidade a retirar introducida polo admin
@@ -162,6 +162,7 @@ if (isset($_REQUEST['eliminar_ve'])){
         $result_eliminar = mysqli_query($mysqli_link,$select_eliminar);
         $num_filas = $result_eliminar->num_rows;
         $fila = mysqli_fetch_array($result_eliminar, MYSQLI_ASSOC);
+
         #Guardamos la cantidade actual del modelo introducido por el admin
         $cant = $fila['cantidade'];
         
@@ -175,11 +176,11 @@ if (isset($_REQUEST['eliminar_ve'])){
             //Si a cantidade introducida é menor que a que temos...
             if ($cantidade < $cant){
 
-            $u="UPDATE vehiculo_venda SET cantidade=$resto where modelo='$modelo'";
+                $u="UPDATE vehiculo_venda SET cantidade=$resto where modelo='$modelo'";
 
                 $result_u = mysqli_query($mysqli_link,$u);
 
-                #Si se realiza correctamente el update...
+                #Si se realiza correctamente o update...
                 if ($result_u){
 
                     echo "</br> Quitáronse ".$cantidade." cantidade/s do modelo ".$modelo.", quedan ".$resto." </br>";
@@ -205,7 +206,7 @@ if (isset($_REQUEST['eliminar_ve'])){
 
             #Si la cantidad que se quiere quitar es mayor a la que tenemos...
             elseif ($cantidade > $cant){
-                #OJO!! En SET cantidade='cantidade - $cantidade' --> no poner comillas si no da error
+                #OLLO!! En SET cantidade='cantidade - $cantidade' --> non poñer comillas, senón da erro.
                 $update="UPDATE vehiculo_venda SET cantidade=cantidade - $cant where modelo='$modelo'";
                 $result_update= mysqli_query($mysqli_link,$update);
                 
@@ -230,7 +231,7 @@ if (isset($_REQUEST['eliminar_ve'])){
             
 
             }
-            #Si no, lo introducido es igual a lo que tenemos...
+            #Senón, a cantidade introducida é a mesma que a que temos
             else{
                 $update2="UPDATE vehiculo_venda SET cantidade=0 where modelo='$modelo'";
                 $result_update2= mysqli_query($mysqli_link,$update2);

@@ -3,10 +3,17 @@
 #iniciamos la sesión para mostrar la sesión del usuario.
 session_start();
 
-#Mostramos sesión del usuario.
-echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div>";
+if(!isset($_SESSION["usuario"])){
+    #Si entra aquí, no tiene sesión inciciada y mandamos a login.
+    echo "No tienes la sesión iniciada, redireccionando al login... ";
+    mysqli_close($mysqli_link);
+    header("refresh: 5; url = index.html");
 
+}else{
 
+    echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div><br>";
+
+}
 ?>
 
 
@@ -32,16 +39,18 @@ if (isset($_REQUEST['cerrar'])){
     session_destroy();
     echo "Sesión pechada! </br>";
     echo "Volvendo á páxina de inicio de sesión...";
-            header("refresh: 3; url = index.html");
+    mysqli_close($mysqli_link);
+    header("refresh: 3; url = index.html");
 
 
 }
 
-
+#Se quere modificar os seus datos
 if (isset($_REQUEST['modificar'])){
+
     $usuario=$_SESSION["usuario"];
 
-
+    
     $select_u = "SELECT * from usuario where usuario= '$usuario'";
 
     $result_u = mysqli_query($mysqli_link, $select_u);

@@ -1,6 +1,6 @@
 <?php
 
-#Recogida de datos
+#Recollida de datos
 
 $contrasinal = $_REQUEST['contrasinal_novo'];
 $nome = $_REQUEST['nome_novo'];
@@ -36,6 +36,7 @@ if (mysqli_connect_errno())
 if(!isset($_SESSION["usuario"])){
     #Si entra aquí, no tiene sesión iniciada y mandamos a login.
     echo "No tienes la sesión iniciada, redireccionando al login... ";
+    mysqli_close($mysqli_link);
     header("refresh: 5; url = index.html");
     
 }else{
@@ -48,18 +49,20 @@ if(!isset($_SESSION["usuario"])){
         $usuario=$_SESSION["usuario"];
         #echo "usuario  ".$usuario;
         
+        #Ejecutamos update con los datos a cambiar
         $update= "UPDATE usuario SET contrasinal='$contrasinal',nome='$nome',direccion='$direccion',telefono='$telefono',nifdni='$nifdni',email='$email' WHERE usuario= '$usuario'";
         $result = mysqli_query($mysqli_link, $update);
         #Se devuelve TRUE si se ejecutó la consulta correctamente.
         
         if( $result){ #Si verdadero, entonce registro echo correctamente.
             echo "Registro actualizado, volviendo al menú...";
-            
+            mysqli_close($mysqli_link);
             header("refresh: 5; url = menu_user_form.php");
         }
         else{
             echo "Error al modificar los datos!" . mysqli_error($mysqli_link);
             echo "Volviendo al menú del usuario...";
+            mysqli_close($mysqli_link);
             header("refresh: 5; url = menu_user_form.php");
         }
         

@@ -27,7 +27,7 @@ if (mysqli_connect_errno())
 
 
 #Comrobamos que todas las variables existan y no estén vacías.
-if ((isset($modelo)) && (isset($cantidade)) && (isset($descricion)) && (isset($marca)) && (isset($prezo)) && (isset($foto))) {
+if (!empty($modelo) && !empty($cantidade) && !empty($descricion) && !empty($marca) && !empty($prezo) && !empty($foto) ) {
 
     
     #Facemos comprobación de si existe ese mismo modelo, si existe, simplemente actualizamos a cantidade
@@ -44,9 +44,11 @@ if ((isset($modelo)) && (isset($cantidade)) && (isset($descricion)) && (isset($m
         if (mysqli_query($mysqli_link, $update)) {
             echo "Xa existe ese modelo rexistrado, actualizamos as cantidades do modelo $modelo. </br> </br>" ;
             echo "Volvendo ao menú de admin";
+            mysqli_close($mysqli_link);
             header("refresh: 5; url = menu_admin_form.php");
         } else {
             echo "Error ao actualizar cantidades, volvendo ao menú de admin";
+            mysqli_close($mysqli_link);
             header("refresh: 5; url = menu_admin_form.php");
         }
         
@@ -62,10 +64,12 @@ if ((isset($modelo)) && (isset($cantidade)) && (isset($descricion)) && (isset($m
         if (mysqli_query($mysqli_link, $insert)) {
             echo "Vehículo novo rexistrado correctamente! </br>";
             echo "Volvendo ao menú de admin";
+            mysqli_close($mysqli_link);
             header("refresh: 5; url = menu_admin_form.php");
             
         } else {
             echo "Erro ao facer o rexistro do novo vehículo...Volviendo ao menú admin";
+            mysqli_close($mysqli_link);
             header("refresh: 5; url = menu_admin_form.php");
         }
 
@@ -76,11 +80,11 @@ if ((isset($modelo)) && (isset($cantidade)) && (isset($descricion)) && (isset($m
     
 
 }
-
 else{
     echo "hola?";
     #Salta aquí si falta algún dato por introducir.
     echo "Faltan datos por introducir! Volviendo al registro";
+    mysqli_close($mysqli_link);
     header("refresh: 3; url = rexistro.html");
 }
 

@@ -1,20 +1,32 @@
 <?php
 
+#Menú principal do usuario
+
 #iniciamos la sesión para mostrar la sesión del usuario.
 session_start();
 
-#Mostramos sesión del usuario.
-echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div><br>";
+if(!isset($_SESSION["usuario"])){
+    #Si entra aquí, no tiene sesión inciciada y mandamos a login.
+    echo "No tienes la sesión iniciada, redireccionando al login... ";
+    mysqli_close($mysqli_link);
+    header("refresh: 5; url = index.html");
+}
+else{
 
 
-echo "<div align='right'>
-        <form name='formulario2' method='post' action='mod_datos_form.php'>
-            <button type='submit' name='modificar' >Modificar os meus datos</button>
-            <button type='submit' name='cerrar' >Cerrar sesión</button>
-            <br/>
+    #Mostramos sesión del usuario.
+    echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div><br>";
 
-        </form>
-        </div>";
+    #Botóns de modificar os datos e pechar sesión
+    echo "<div align='right'>
+            <form name='formulario2' method='post' action='mod_datos_form.php'>
+                <button type='submit' name='modificar' >Modificar os meus datos</button>
+                <button type='submit' name='cerrar' >Cerrar sesión</button>
+                <br/>
+
+            </form>
+            </div>";
+}
 
 ?>
 
