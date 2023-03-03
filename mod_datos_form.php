@@ -12,7 +12,8 @@ if(!isset($_SESSION["usuario"])){
 }else{
 
     echo "<br><div align='right'><b>Usuario:</b> ".$_SESSION["usuario"]."</div><br>";
-
+        
+   
 }
 ?>
 
@@ -45,9 +46,22 @@ if (isset($_REQUEST['cerrar'])){
 
 }
 
+
+#consulta para a recollida de datos do usuario
 #Se quere modificar os seus datos
 if (isset($_REQUEST['modificar'])){
 
+     #Creamos botón para volver ao menú principal
+
+     echo "
+
+     <form name='formulario' method='post' action='menu_user_form.php'>
+ 
+     <button type='submit' name='volver' ><b>Volver menú usuario</b></button>
+ 
+     </form>
+ 
+     ";
     $usuario=$_SESSION["usuario"];
 
     
@@ -82,17 +96,17 @@ if (isset($_REQUEST['modificar'])){
 
     <h1>Modificación de Datos</h1>
 
-    <h5> Cambia aquellos datos que quieras modificar</h5>
+    <h5> Introduce os datos que queiras modificar</h5>
 
     <form name='formulario' method='post' action='mod_datos.php' >
         <!-- No dejamos que modifique el nombre de usuario! -->
-        <p>Usuario <input type='text' name='user' readonly value='$usuario'>>  </p>
-        <p>Contrasinal <input type='password' name='contrasinal_novo' placeholder='Introduzca novo contrasinal' value='$contrasinal'> </p>
-        <p>Nome <input type='text' name='nome_novo' placeholder='Introduzca novo nome' value='$nome'> </p>
-        <p>Direccion <input type='text' name='direccion_novo' placeholder='Introduzca nova direccion' value='$direccion'> </p>
-        <p>Telefono <input type='text' name='telefono_novo' placeholder='Introduzca novo telefono' value='$telefono'> </p>
-        <p>Nifdni <input type='text' name='nifdni_novo' placeholder='Introduzca novo nifdni' value='$nifdni'> </p>
-        <p>Email <input type='text' name='email_novo' placeholder='Introduzca novo email' value='$email'> </p>
+        <p>Usuario <input type='text' name='user' readonly value='$usuario'>>  </p> 
+        <p>Contrasinal <input type='password' name='contrasinal_novo' placeholder='Introduzca novo contrasinal' value=''> </p>
+        <p>Nome <input type='text' name='nome_novo' placeholder='Introduzca novo nome' value=''> </p>
+        <p>Direccion <input type='text' name='direccion_novo' placeholder='Introduzca nova direccion' value=''> </p>
+        <p>Telefono <input type='text' name='telefono_novo' placeholder='Introduzca novo telefono' value=''> </p>
+        <p>Nifdni <input type='text' name='nifdni_novo' placeholder='Introduzca novo nifdni' value=''> </p>
+        <p>Email <input type='text' name='email_novo' placeholder='Introduzca novo email' value=''> </p>
         <!-- No dejamos que modifique el tipo de usuario! -->
         <p>Tipo usuario <input type='text' name='tipo_user' readonly value='$tipo_usuario'>>  </p>
 
