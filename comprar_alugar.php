@@ -113,7 +113,10 @@ if(!isset($_SESSION["usuario"])){
         }
 
         else{
-            echo "No se puede realizar la compra!";
+            echo "No has seleccionado ningún modelo para comprar</br>";
+            echo "Volvendo ao menú de usuario...";
+            mysqli_close($mysqli_link);
+            header("refresh: 3; url = menu_user_form.php");
         }
 
     }
@@ -209,10 +212,10 @@ if(!isset($_SESSION["usuario"])){
             
         }
         else{
-            echo "meeeh, error";
-            echo "Volvendo ao menú do usuario... </br>";
+            echo "No has seleccionado ningún modelo para alugar</br>";
+            echo "Volvendo ao menú de usuario...";
             mysqli_close($mysqli_link);
-            header("refresh: 5; url = menu_user_form.php");
+            header("refresh: 3; url = menu_user_form.php");
         }
     
     }

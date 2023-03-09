@@ -22,7 +22,7 @@ if (isset($_REQUEST['eliminar_alu'])){
     $cantidade = $_REQUEST['cantidade_eliminar']; #Recollemos a cantidade a retirar introducida polo admin
 
     #Si se cubriron os campos...
-    if (isset($modelo) && isset($cantidade)){
+    if (!empty($modelo) && !empty($cantidade)){
 
         
         $select_eliminar = "SELECT * from vehiculo_aluguer where modelo='$modelo'";
@@ -154,7 +154,7 @@ if (isset($_REQUEST['eliminar_ve'])){
     $cantidade = $_REQUEST['cantidade_eliminarV'];
 
     #Si se cubriron os campos...
-    if (isset($modelo) && isset($cantidade)){
+    if (!empty($modelo) && !empty($cantidade)){
          #Cantidade a retirar introducida polo admin
 
     

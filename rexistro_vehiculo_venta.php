@@ -83,9 +83,9 @@ if (!empty($modelo) && !empty($cantidade) && !empty($descricion) && !empty($marc
 else{
     echo "hola?";
     #Salta aquí si falta algún dato por introducir.
-    echo "Faltan datos por introducir! Volviendo al registro";
+    echo "Faltan datos por introducir! Volviendo al menú admin";
     mysqli_close($mysqli_link);
-    header("refresh: 3; url = rexistro.html");
+    header("refresh: 3; url = menu_admin_form.php");
 }
 
 

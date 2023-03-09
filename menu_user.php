@@ -123,7 +123,7 @@ if(!isset($_SESSION["usuario"])){
         echo "<br><b> Vehículos alugados</b><br>";
         echo "<form action='devolucion.php' method='post'>";
         echo "<select name='modelo_devolver'>
-                <option value='0'> Elixe vehiculo a devolver </option>";
+                <option value=''> Elixe vehiculo a devolver </option>";
 
                 while ($fila3 = mysqli_fetch_array($result_devolucion, MYSQLI_ASSOC)) {
                     $modelo = $fila3['modelo'];
