@@ -13,7 +13,7 @@ mysqli_set_charset($mysqli_link, "utf8");
 if (mysqli_connect_errno())
 {
     printf("La conexión con MySQL ha fallado con error: %",
-        mysqli_connect_error());
+        mysqli_connect_error()); 
     exit;
 }
 
@@ -219,7 +219,7 @@ if(!isset($_SESSION["usuario"])){
     
             
         }
-        #Si no existen usuarios a añadir...
+        #Si no existen vehiculos a devolver...
         else{
             echo "Non existe ningún vehículo pendente de delvolver ao aluguer </br>";
             echo "Volvendo ao menú admin... </br>";

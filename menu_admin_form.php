@@ -20,8 +20,6 @@ if (mysqli_connect_errno())
 
 #Hacemos la comprobación de si el usuario tiene la sesión iniciada, si no, redirige a que lo haga.
 
-#Si lo está, saltamos al menú de vehículos.
-
 $user=$_SESSION["usuario"];
 
 if(!isset($_SESSION["usuario"])){

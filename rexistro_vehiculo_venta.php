@@ -81,7 +81,7 @@ if (!empty($modelo) && !empty($cantidade) && !empty($descricion) && !empty($marc
 
 }
 else{
-    echo "hola?";
+    
     #Salta aquí si falta algún dato por introducir.
     echo "Faltan datos por introducir! Volviendo al menú admin";
     mysqli_close($mysqli_link);
